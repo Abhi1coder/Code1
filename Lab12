@@ -1,0 +1,134 @@
+Step 1: Open CloudWatch
+
+Search AWS Console:
+
+CloudWatch
+
+Open:
+
+Amazon CloudWatch
+
+Step 2: Open Alarms
+
+Left menu:
+
+Alarms
+
+Click:
+
+Create alarm
+
+Step 3: Select metric
+
+Click:
+
+Select metric
+
+Choose:
+
+EC2 → Per-Instance Metrics
+
+Step 4: Select CPUUtilization
+
+Choose your instance:
+
+Example:
+
+i-02506b58f68851ec7
+
+Metric:
+
+CPUUtilization
+
+Click:
+
+Select metric
+
+Step 5: Configure threshold
+
+Choose:
+
+Static
+
+Condition:
+
+Greater than 60
+
+Meaning:
+
+Alarm if CPU > 60%
+
+Step 6: Set evaluation period
+
+Choose:
+
+1 minute
+
+and
+
+1 datapoint
+
+Meaning:
+
+If CPU > 60 for 1 minute → alarm.
+
+Step 7: Create SNS notification
+
+Choose:
+
+Create new topic
+
+Topic name:
+cpu-alert-topic
+
+Email:
+
+Enter your email.
+
+SNS means
+
+Amazon Simple Notification Service sends email.
+
+Step 8: Confirm email
+
+AWS sends email.
+
+You must click:
+
+Confirm subscription
+
+Without confirmation alarm cannot send mail.
+
+Step 9: Name alarm
+
+Example:
+
+EC2-CPU-Above-60
+
+Create alarm.
+
+Done
+
+What CloudWatch now does
+
+Every minute:
+
+Checks CPU metric.
+
+If CPU > 60:
+
+Alarm changes state:
+
+OK → ALARM
+
+Then SNS sends email.
+
+Visual alarm states
+
+Test the alarm now
+
+Inside EC2:
+
+yes > /dev/null &
+
+This forces CPU high.
