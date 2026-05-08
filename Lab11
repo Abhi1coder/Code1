@@ -1,0 +1,83 @@
+Step 1: Open CloudWatch
+
+AWS Console search:
+
+CloudWatch
+
+Open:
+
+Amazon CloudWatch
+
+Step 2: Go to Dashboards
+
+Left side menu:
+
+Dashboards
+
+Click:
+
+Create dashboard
+
+Step 3: Give dashboard name
+
+Example:
+
+EC2-CPU-Monitor
+
+Click:
+
+Create dashboard
+
+Step 4: Choose widget type
+
+Select:
+
+Line
+
+Because CPU is best shown as graph.
+
+Why line graph?
+
+Because CPU changes over time.
+
+Line graph shows trend clearly.
+
+Step 5: Select metric
+
+Choose:
+
+EC2
+
+Then:
+
+Per-Instance Metrics
+
+Step 6: Select CPU metric
+
+Find:
+
+CPUUtilization
+
+Check your instance row.
+
+Very important
+
+Choose your current instance ID.
+
+Example:
+
+i-02506b58f68851ec7
+
+Step 7: Add widget
+
+Click:
+
+Create widget
+
+Step 8: Save dashboard
+
+Click:
+
+Save dashboard
+
+Done
