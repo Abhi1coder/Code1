@@ -1,0 +1,202 @@
+Step 1: Connect to EC2
+
+Since you already have EC2:
+
+ssh -i your-key.pem ec2-user@your-public-ip
+
+Step 2: Install Docker
+
+Run:
+
+sudo yum update -y
+
+sudo yum install docker -y
+
+sudo service docker start
+
+sudo usermod -aG docker ec2-user
+
+Now logout and reconnect:
+
+exit
+
+Reconnect again:
+
+ssh -i your-key.pem ec2-user@your-public-ip
+
+Check Docker:
+
+docker --version
+
+You should see version.
+
+Step 3: Create project folder
+
+mkdir mywebserver
+
+cd mywebserver
+
+Step 4: Create simple HTML page
+
+Create file:
+
+nano index.html
+
+Paste:
+
+<html>
+
+<head>
+
+<title>My First Docker Web Server</title>
+
+</head>
+
+<body>
+
+<h1>Hello from Docker on AWS EC2</h1>
+
+</body>
+
+</html>
+
+Save:
+
+CTRL + O
+
+ENTER
+
+CTRL + X
+
+Step 5: Create Dockerfile
+
+Now create Dockerfile:
+
+nano Dockerfile
+
+Paste:
+
+FROM nginx:latest
+
+COPY index.html /usr/share/nginx/html/index.html
+
+Save again.
+
+Explanation line by line
+
+Line 1
+
+FROM nginx:latest
+
+Means:
+
+Start from existing nginx image
+
+Nginx = web server software
+
+NGINX is already available in Docker Hub.
+
+So Docker downloads ready-made nginx.
+
+Line 2
+
+COPY index.html /usr/share/nginx/html/index.html
+
+Means:
+
+Copy your webpage into nginx web folder.
+
+That folder is where nginx serves files from.
+
+Why only 2 lines?
+
+Because nginx already contains:
+
+Linux
+
+Web server installed
+
+Port configured
+
+You only add your page.
+
+That is Docker power
+
+Step 6: Build Docker image
+
+Run:
+
+docker build -t myweb:v1 .
+
+Explanation:
+
+docker build
+
+Build image
+
+-t
+
+Tag name
+
+myweb:v1
+
+Image name = myweb
+
+Version = v1
+
+Current folder
+
+You should see:
+
+Successfully built
+
+Step 7: Check image
+
+docker images
+
+You will see:
+
+myweb v1
+
+Step 8: Run container
+
+docker run -d -p 80:80 myweb:v1
+
+Explanation:
+
+-d
+
+Run in background
+
+-p 80:80
+
+Map:
+
+EC2 port 80 → container port 80
+
+Step 9: Check running container
+
+docker ps
+
+You should see running container.
+
+Step 10: Open browser
+
+Go:
+
+http://your-ec2-public-ip
+
+You will see:
+
+Hello from Docker on AWS EC2
+
+If webpage does NOT open
+
+Check EC2 security group:
+
+Allow:
+
+HTTP 80
+
+Important.
+
