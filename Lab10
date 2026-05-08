@@ -1,0 +1,153 @@
+Before starting: What you already need
+
+Inside EC2:
+
+Docker installed
+
+Image exists
+
+Check:
+
+docker images
+
+You should see:
+
+myweb v1
+
+Step 1: Create ECR repository
+
+Go AWS Console:
+
+Search:
+
+ECR
+
+Open:
+
+Amazon Elastic Container Registry
+
+Click:
+
+Create repository
+
+Repository name:
+
+myweb
+
+Visibility:
+
+Choose:
+
+Private
+
+Create repository
+
+After creation AWS gives repository URI like:
+
+385105852201.dkr.ecr.eu-north-1.amazonaws.com/myweb
+
+Important: save this URI.
+
+Step 2: Login Docker to ECR
+
+Inside EC2 run:
+
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS
+
+--password-stdin your-repository-uri-without-/myweb
+
+Example:
+
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS
+
+--password-stdin 123456789012.dkr.ecr.ap-south-1.amazonaws.com
+
+Explanation
+
+aws ecr get-login-password
+
+AWS generates temporary login password
+
+docker login
+
+Docker authenticates with ECR
+
+--username AWS
+
+Fixed username for ECR
+
+If aws command fails
+
+Install AWS CLI first:
+
+sudo yum install aws-cli -y
+
+Check:
+
+aws --version
+
+If AWS credentials not configured
+
+Run:
+
+aws configure
+
+Enter:
+
+● Access key
+
+● Secret key
+
+● region = ap-south-1
+
+Step 3: Tag your image
+
+Your current image:
+
+myweb:v1
+
+ECR requires full repository name.
+
+Run:
+
+docker tag myweb:v1 your-full-ecr-uri:latest
+
+Example:
+
+docker tag myweb:v1 123456789012.dkr.ecr.ap-south-1.amazonaws.com/myweb:latest
+
+Explanation
+
+Why tagging?
+
+Because Docker must know destination registry.
+
+Step 4: Push image
+
+Run:
+
+docker push your-full-ecr-uri:latest
+
+Example:
+
+docker push 123456789012.dkr.ecr.ap-south-1.amazonaws.com/myweb:latest
+
+What happens now?
+
+Docker uploads layers one by one.
+
+You will see:
+
+layer already exists
+
+pushed
+
+Step 5: Verify in AWS Console
+
+Refresh ECR repository.
+
+You should see:
+
+latest
+
+Image uploaded successfully
