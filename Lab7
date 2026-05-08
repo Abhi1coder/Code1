@@ -1,0 +1,256 @@
+PRACTICAL FROM SCRATCH
+
+STEP 1 — Launch EC2 Instance
+
+Use free tier EC2.
+
+Choose AMI
+
+Amazon Linux 2
+
+Instance type
+
+t2.micro
+
+Security group rules
+
+Allow:
+
+SSH 22 My IP
+
+HTTP 80 Anywhere
+
+Why these ports?
+
+Port 22
+
+SSH access for terminal login.
+
+Port 80
+
+HTTP access for browser.
+
+Without port 80:
+
+site not opening
+
+STEP 2 — Attach IAM role (very important, students often miss this)
+Attach EC2 role with:
+
+AmazonS3ReadOnlyAccess
+
+Why needed?
+
+Without IAM role:
+
+aws s3 cp → Access Denied
+
+STEP 3 — Connect to EC2
+
+ssh -i your-key.pem ec2-user@PUBLIC-IP
+
+Example:
+
+ssh -i lab.pem ec2-user@13.48.xx.xx
+
+Common beginner mistake
+
+Wrong username:
+
+Wrong:
+
+ubuntu
+
+Correct for Amazon Linux:
+
+ec2-user
+
+STEP 4 — Install web server
+
+Inside EC2:
+
+sudo yum update -y
+
+sudo yum install httpd -y
+
+sudo systemctl start httpd
+
+sudo systemctl enable httpd
+
+Verify Apache running
+
+sudo systemctl status httpd
+
+You must see:
+
+active (running)
+
+Why Apache?
+
+Apache serves files placed in:
+
+/var/www/html
+
+to browser automatically.
+
+STEP 5 — Create application locally
+
+On laptop:
+
+mkdir myapp
+
+cd myapp
+
+Create HTML file
+
+echo "<h1>DevOps Lab Program 7</h1>" > index.html
+
+Verify
+
+cat index.html
+
+Output:
+
+<h1>DevOps Lab Program 7</h1>
+
+STEP 6 — Create deployment artifact
+
+Zip file
+
+zip myapp.zip index.html
+
+Theory
+
+Artifact means:
+
+deployable packaged file
+
+Source code = editable
+
+Artifact = deployable package
+
+STEP 7 — Create S3 bucket
+
+Create bucket in Amazon S3
+
+Example:
+
+myapp-lab-demo
+
+Upload artifact
+
+Upload:
+
+myapp.zip
+
+Why S3?
+
+S3 acts as:
+
+central artifact storage
+
+STEP 8 — Install AWS CLI if missing
+
+Inside EC2:
+
+sudo yum install aws-cli -y
+
+Verify AWS CLI
+
+aws --version
+
+STEP 9 — Download artifact from S3
+
+Inside EC2:
+
+aws s3 cp s3://myapp-lab-demo/myapp.zip .
+
+If Access Denied
+
+Cause:
+
+IAM role missing.
+
+STEP 10 — Install unzip if missing
+
+sudo yum install unzip -y
+
+STEP 11 — Extract artifact
+
+unzip myapp.zip
+
+Verify file
+
+ls
+
+Must show:
+
+index.html
+
+STEP 12 — Deploy to Apache folder
+
+sudo cp index.html /var/www/html/
+
+Why this folder?
+
+Apache default website root:
+
+/var/www/html
+
+STEP 13 — Verify deployment
+
+Open browser:
+
+http://EC2-PUBLIC-IP
+
+Expected output
+
+<h1>DevOps Lab Program 7</h1>
+
+STEP 14 — Simulate second deployment
+
+Change local file:
+
+echo "<h1>Version 2 Success</h1>" > index.html
+
+zip myapp.zip index.html
+
+Upload again to S3.
+
+Download again in EC2
+
+aws s3 cp s3://myapp-lab-demo/myapp.zip .
+
+unzip -o myapp.zip
+
+sudo cp index.html /var/www/html/
+
+Refresh browser
+
+Now:
+
+<h1>Version 2 Success</h1>
+
+Connect to CodeDeploy concept
+
+Normally AWS CodeDeploy uses:
+
+version: 0.0
+
+os: linux
+
+files:
+
+ - source: /
+
+ destination: /var/www/html
+
+Meaning
+
+source
+
+Artifact files
+
+destination
+
+Server deployment folder
