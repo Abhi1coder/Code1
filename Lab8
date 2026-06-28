@@ -1,207 +1,68 @@
-STEP 1 — Create local project
-
 Open terminal:
-
 mkdir newpipeline
-
 cd newpipeline
-
-STEP 2 — Create website file
-
-echo "<h1>CodePipeline MCA Lab</h1>" > index.html
-
-STEP 3 — Verify file exists
-
-ls
-
-You must see:
-
-index.html
-
-STEP 4 — Push code to GitHub
-
-Initialize git
-
+echo "<h1>CodePipeline MCA Lab</h1>">index.html
 git init
-
 git add .
-
 git commit -m "first commit"
 
-Create GitHub repo
-
-Repository name:
-
-Newpipeline
-
-Connect repo
-
-git remote add origin https://github.com/YOUR_USERNAME/Newpipeline.git
-
+create git hub repo named Newpipeline
+git remote add origin https://github.com/Abhi1coder/Newpipeline.git
 If origin exists:
-
 git remote set-url origin https://github.com/YOUR_USERNAME/Newpipeline.git
 
-Push
-
 git branch -M main
-
 git push -u origin main
 
-STEP 5 — Create Amazon S3 bucket
+-- optional -git config --global user.name "Your Name"  or git config --global --unset user.name
+--optional -git config --global user.email "your_email@example.com" or git config --global --unset user.email
 
-Bucket name example:
-
-newpipelinedemo
-
-Region:
-
-same as pipeline region.
+create bucket pipelinedemo
 
 STEP 6 — Disable block public access
-
 Permissions → Edit
-
 Uncheck all 4 boxes.
-
 Type:
-
 confirm
-
 Save.
 
 STEP 7 — Add bucket policy
-
 Paste exact policy:
-
 {
-
- "Version": "2012-10-17",
-
- "Statement": [
-
- {
-
- "Effect": "Allow",
-
- "Principal": "*",
-
- "Action": "s3:GetObject",
-
- "Resource": "arn:aws:s3:::newpipelinedemo/*"
-
- }
-
- ]
-
+"Version": "2012-10-17",
+"Statement": [
+{
+"Effect": "Allow",
+"Principal": "*",
+"Action": "s3:GetObject",
+"Resource": "arn:aws:s3:::bucket_name/*"
+}
+]
 }
 
-Bucket name must match exactly.
-
 STEP 8 — Enable static website hosting
-
 Properties → Static website hosting
-
 Enable:
-
 Index document = index.html
-
 Save.
 
 STEP 9 — Upload index.html manually first
-
 Upload file:
-
 index.html
 
 STEP 10 — Verify website manually
-
 Open website endpoint:
-
-http://newpipelinedemo.s3-website-eu-north-1.amazonaws.com
-
-You should see:
-
-<h1>CodePipeline MCA Lab</h1>
+http://bucketname.s3-website-us-east-1.amazonaws.com
 
 STEP 11 — Create AWS CodePipeline
-
-Source stage
-
-Provider:
-
-GitHub
-
-Repository:
-
-Newpipeline
-
-Branch:
-
-main
-
-Skip build stage
-
-Choose:
-
-Skip build stage
-
-Deploy stage
-
-Provider:
-
-S3
-
-Bucket:
-
-newpipelinedemo
-
 Very important
-
 Enable:
-
 Extract file before deploy = ON
 
-STEP 12 — Run pipeline
-
-Pipeline starts automatically.
-
-Stages:
-
-Source → Deploy
-
-must turn green
-
-STEP 13 — Test automatic deployment
-
-Change file locally:
-
-nano index.html
-
-Change:
-
-<h1>Version 2 Pipeline Success</h1>
-
-Save.
-
-Push again
-
+now change file manually
+echo "<h1>Changed</h1>">index.html
 git add .
-
 git commit -m "version 2"
-
 git push
 
-STEP 14 — Verify auto deploy
-
-Refresh website endpoint.
-
-Now you must see:
-
-<h1>Version 2 Pipeline Success</h1>
-
-This proves CI/CD complete
-
-Because:
-
-One git push automatically changed production website.
+refresh end point
