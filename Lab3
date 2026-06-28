@@ -1,0 +1,67 @@
+3. Create Repository on GitHub
+After login:
+Click:
+New Repository
+Fill:
+Repository Name: devops-lab
+Visibility: Public
+Click:
+Create Repository
+Internal Meaning
+Repository = project container.
+Repository = folder + full history
+4. Create Local Project 
+mkdir devops-lab
+cd devops-lab
+5. Initialize Git
+git init
+
+6. Create First File
+echo "Hello World"> app.txt
+
+7. Check Git Status
+git status
+
+8. Add File to Staging Area
+git add .
+
+9. Commit Changes
+git commit -m "Initial commit"
+
+10. Connect Local Git to GitHub
+GitHub gives URL:
+Example:
+git remote add origin https://github.com/USERNAME/devops-lab.git
+
+Verify
+
+git remote -v
+11. Push to GitHub
+git branch -M main
+git push -u origin main
+
+
+12. Modify Existing File
+echo "Second line added"> app.txt
+
+13. Check Change
+git status
+Students Observe
+modified file
+14. Commit Again
+git add .
+git commit -m "Updated app file"
+Meaning
+Second snapshot created.
+15. Push Again
+git push
+Now Git sends only changed part.
+
+Not full project.
+16. Pull Operation
+Now edit file directly in GitHub browser.
+Add line:
+Added directly from GitHub
+Save.
+Then local terminal:
+git pull origin main
