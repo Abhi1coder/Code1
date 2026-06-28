@@ -1,0 +1,76 @@
+Step 1 — Open AWS Console
+Search:
+CodePipeline
+Click Create pipeline.
+In AWS search bar type:
+CodePipeline
+Step 2 — Pipeline Name
+Enter:
+devops-pipeline
+Step 3 — Creation Option
+Choose:
+Build custom pipeline
+Why?
+Because templates like ECR / ECS need advanced services.
+Step 4 — Source Provider
+Choose:
+GitHub (via GitHub App)
+Step 5 — Create GitHub Connection
+Connection name:
+github-connection
+Click:
+Connect to GitHub
+Authorize GitHub account.
+Step 6 — Repository Selection
+Choose repository in exact format:
+Dik28/devops-lab
+Important Teaching Point
+Repository format must be:
+account/repository-name
+Step 7 — Branch Selection
+Choose:
+main
+Why Branch Matters
+AWS only monitors selected branch.
+Step 8 — Trigger Option
+Keep:
+Detect changes automatically
+Internal Working
+GitHub webhook created automatically
+Step 9 — Build Stage
+Skip build stage (for beginner lab).
+Why Skip?
+No compilation required for simple file demo.
+Step 10 — Deploy Stage
+Choose deploy provider:
+Amazon S3
+Step 11 — Select Bucket
+Choose bucket:
+diksha-devops-bucket-2026
+(or student bucket name)
+Step 12 — S3 Object Key
+Enter:
+pipeline-output.zip
+Step 13 — Check Extract Option
+Extract file before deploy
+Why Extract?
+
+Without extract:
+zip file stored only
+With extract:
+actual files visible in bucket
+Step 14 — Create Pipeline
+Click:
+Create pipeline
+Step 15 — First Run
+Pipeline runs automatically.
+Students observe:
+Source stage
+Deploy stage
+Step 16 — Test Repository Trigger (Most Important)
+Go to GitHub.
+Edit:
+app.txt
+Add:
+Pipeline trigger test
+Commit change.
