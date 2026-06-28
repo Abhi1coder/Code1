@@ -1,0 +1,12 @@
+first execute lab3
+
+Full Commands for Students
+git branch feature1
+git checkout feature1
+echo "This line added inside feature branch">> app.txt
+git add .
+git commit -m "Feature branch update"
+git push -u origin feature1
+git checkout main
+git merge feature1
+git push
