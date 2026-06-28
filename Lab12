@@ -132,3 +132,6 @@ Inside EC2:
 yes > /dev/null &
 
 This forces CPU high.
+
+Stop CPU load
+pkill yes
