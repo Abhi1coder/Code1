@@ -1,3 +1,6 @@
+git credential-manager erase
+
+
 Step 1 — Open AWS Console
 Search:
 CodePipeline
