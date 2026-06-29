@@ -35,6 +35,13 @@ sudo yum install aws-cli -y
 Check:
 aws --version
 
+If AWS credentials not configured
+Run:
+aws configure
+Enter:
+ Access key
+ Secret key
+ region = ap-south-1
 
 Step 3: Tag your image
 Your current image:
